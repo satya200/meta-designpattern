@@ -4,6 +4,6 @@
 #include "interface_observer.h"
 
 int registerObserver(Observer_t *);
-int removeObserver(Observer_t *);
+int removeObserver(int);
 
 #endif

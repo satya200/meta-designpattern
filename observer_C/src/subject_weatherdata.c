@@ -5,11 +5,13 @@
 #include "interface_subject.h"
 
 static WS *observer_head = NULL;
-static int node_cnt = 0;
+static int node_cnt = 1;
+
+/* Below Function will register Observer in a Single Linked List */
 
 int registerObserver(Observer_t *obs)
 {
-	int ret = -1;
+	//int ret = -1;
 	WS *new_node = NULL;
 
 	if (NULL == obs) {
@@ -22,37 +24,72 @@ int registerObserver(Observer_t *obs)
 		return -1;
 	}
 	if (NULL == observer_head) {
-		printf("fast node\n");
 		new_node->next = NULL;
 		(*new_node).display = obs;
+		new_node->disp_id = node_cnt++;
 		observer_head = new_node;
 	} else {
 		new_node->next = observer_head;
 		(*new_node).display = obs;
+		new_node->disp_id = node_cnt++;
 		observer_head = new_node;
 	}
 	return 0;
 }
 
-int removeObserver(Observer_t *obs)
+/* Below Function will remove Observer from List */
+
+int removeObserver(int disp_id)
 {
-	if (NULL == obs) {
-		printf("Err ret in removeObserver()\n");
-		return -1;
+	WS *tmp = observer_head;
+	WS *prev = tmp;
+	int ret = -1;
+
+	if (tmp == NULL) {
+		printf("NO object found. List is empty\n");
+		return ret;
+	}
+	/* If Node Found at 1st Position */
+	if (observer_head->disp_id == disp_id) {
+		observer_head = observer_head->next;
+		free(tmp);
+		tmp = NULL;
+		ret = 0;
+	}
+	/* Traversing each Node */
+	while (tmp && (ret != 0)) {
+		if (tmp->disp_id == disp_id) {
+			prev->next = tmp->next;
+			free(tmp); // Free memory block
+			break;
+		} else {
+			prev = tmp;
+			tmp = tmp->next; //Traversing linked list
+		}
+	}
+	if (tmp == NULL) {
+		printf("REQUESTED ID IS NOT PRESENT IN LIST\n");
+	} else {
+		tmp = NULL; // Dangling Pointer
 	}
 	return 0;
 }
 
+/* Below Function will Notify to Observer */
+
 int notifyObservers(int temp, int time)
 {
 	WS *tmp = observer_head;
+	int id = 0;
 	if (tmp == NULL) {
 		printf("NULL pointer\n");
 		return -1;
 	}
 	printf("Notify Started.....\n");
 	while (NULL != tmp) {
-		tmp->display->update(temp, time);
+		id = tmp->disp_id;
+		/* Calling Function using function pointer */
+		tmp->display->update(id, temp, time);
 		tmp = tmp->next;
 	}
 	printf("Notify Done.....\n");

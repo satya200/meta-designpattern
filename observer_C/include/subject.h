@@ -8,11 +8,12 @@
 
 typedef struct WS_List_Node
 {
-	unsigned int id;
+	int disp_id;
 	Observer_t *display;	
 	struct WS_List_Node *next;	
 }WS;
 
 int notifyObservers(int, int);
+int WeatherChange(int, int);
 
 #endif
