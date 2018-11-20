@@ -1,3 +1,10 @@
+/*
+AUTHOR : Satya Sundar Sahu
+DATE: 20-Nov-2018
+
+This File contains test application.
+
+*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -12,6 +19,8 @@ int main()
 {
 	int ret = -1;
 	int i = 0;
+	float temp = 23.3;
+	float time = 13.15;
 	
 	printf("******** APPLICATION STARTED *********\n");
 	for (i = 0; i < 3; i++) {
@@ -24,7 +33,7 @@ int main()
 		}
 	}
 
-	ret = WeatherChange(12, 23);
+	ret = WeatherChange(temp, time);
 	if (-1 == ret) {
 		printf("Err in ret WeatherChange()\n");
 		return -1;
@@ -44,5 +53,7 @@ int main()
 		printf("Success WeatherChange()\n");
 	}
 	printf("******** APPLICATION END *********\n");
+	//ret = DestDispObj(1);
+	//ret = DestDispObj(3);
 	return 0;
 }

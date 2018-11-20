@@ -13,7 +13,7 @@ typedef struct WS_List_Node
 	struct WS_List_Node *next;	
 }WS;
 
-int notifyObservers(int, int);
-int WeatherChange(int, int);
+int notifyObservers(float, float);
+int WeatherChange(float, float);
 
 #endif

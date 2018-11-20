@@ -13,11 +13,11 @@ Observer_t obs_update;
 
 /* Below Function will show data is display */
 
-int display_data(int id, int temp, int time)
+int display_data(int id, float temp, float time)
 {
 	printf("----------------------|\n");
 	printf("| DISPLAY:%d-\n|--------------------|\n|\t\
-Temp: %d\n|---------------------|\n|\tTime: %d\n|",id,temp,time);
+Temp: %.2f\n|---------------------|\n|\tTime: %.2f\n|",id,temp,time);
 	printf("----------------------|\n");
 	return 0;
 }
@@ -25,7 +25,7 @@ Temp: %d\n|---------------------|\n|\tTime: %d\n|",id,temp,time);
 /* Below Function will call from subject<Weather station> 
 *  through function pointer*/
 
-void Update(int id, int temp, int time)
+void Update(int id, float temp, float time)
 {
 	int ret = -1;
 
@@ -47,6 +47,8 @@ int CreatDispObj()
 	if (ret == -1) {
 		printf("Err in registerObserver()\n");
 		return -1;
+	} else if (ret == 1) {
+		printf("Wait some time. Station BUSY\n");
 	} else {
 		DBG_PRINT("Successfuly register\n");
 	}
@@ -65,6 +67,8 @@ int DestDispObj(int disp_id)
 	if (ret == -1) {
 		printf("Err in removeObserver()\n");
 		return -1;
+	} else if (ret == 1) {
+		printf("Wait some time. Station Busy\n");
 	} else {
 		DBG_PRINT("Successfuly remove\n");
 	}
